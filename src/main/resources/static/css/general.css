@@ -1,0 +1,49 @@
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid rgba(0,0,0,.5);
+    background: #dff0d8;
+    font-weight: 500;
+    color: #777;
+    margin-bottom: .3em;
+}
+
+
+.navbarStyle
+{
+	background-color: rgb(45,190,96);
+}
+
+.navbar-default .navbar-nav>li>a
+{
+	color: white;
+    font-weight: 600;
+}
+
+.navbar-default .navbar-brand
+{
+	color: white;
+    font-weight: 600;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
+	    background-image: linear-gradient(to bottom,hsla(131, 39%, 54%, 0.79) 0,#e2e2e2 100%);
+}
+
+.lineaNavbarSpan {
+    color: black;
+    font-weight: 600;
+    
+}
+
+.lineaNavbar
+{
+	border-left: #c0c0c0 1.5px solid;
+	height: 4em;
+	text-align: center;
+	color:black;
+}
+
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+    color: black;
+    text-decoration: none;
+    font-weight: 800;
+}

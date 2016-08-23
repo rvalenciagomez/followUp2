@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title>Edit Course</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/css/oportunidades.css" />
+    <!--Estilo de fecha de accion con tiempo  -->
+
+    
+	<script   src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/editOportunidad.js"></script>
+    
+        <!--fecha de accion con tiempo  -->
+    <script type="text/javascript" src="/js/jquery-ui-timepicker-addon.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+	
+  
+
+   <script th:inline="javascript" >
+   /*<![CDATA[*/
+	  var oportunidadId = /*[[${oportunidad.id}]]*/ '1';
+	  var clientes = /*[[${clientes}]]*/ '1';
+	
+	   $( function() {
+		    /* $( "#clienteOport" ).autocomplete({
+		      source: clientes
+		    }); */
+		   
+	   
+		     var search = []
+		     
+				for(var i = 0; i<clientes.length ; i++)
+				{  
+					
+					search.push(
+				      {
+				    	value: clientes[i].id,
+				        label: clientes[i].nombre + " - " + clientes[i].email,
+				        nombre: clientes[i].nombre,
+				        email: clientes[i].email,
+				        telefono: clientes[i].telefono,
+				        movil: clientes[i].movil
+				      }
+		          );
+				}
+	   
+		  
+       $( "#project" ).autocomplete({
+         minLength: 0,
+         source: search,
+         focus: function( event, ui ) {
+           $( "#project" ).val( ui.item.label );
+           return false;
+         },
+         select: function( event, ui ) {
+           $( "#project" ).val( ui.item.nombre );
+           $( "#project-id" ).val( ui.item.value );
+           $( "#email" ).val( ui.item.email );
+           $( "#telefono" ).val( ui.item.telefono );
+           $( "#movil" ).val( ui.item.movil );
+           /*          $( "#project-description" ).html( ui.item.desc );
+            $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+ */    
+           return false;
+         }
+       })
+       .autocomplete( "instance" )._renderItem = function( ul, item ) {
+         return $( "<li>" )
+           .append( "<div>" + item.label+ "</div>" )
+           .appendTo( ul );
+       };  
+     
+	 });		  
+   /*]]>*/
+  
+   </script>
+  
+
+</head>
+<body>  
+  <div class="container">
+  
+  <div class="row">
+    <div class="col-xs-12">
+  		<div th:replace="fragments/header :: header"></div>    
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-xs-12">
+	    <h2 style="margin-top:2em" th:text="${'Editar Oportunidad:  ' + {oportunidad.asunto}}">Edit oportunidad</h2>
+	  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <form id="frmDeleteOportunidad" th:action="${{oportunidad.id} + '/deleteOportunidad'}" method="post">
+	    <button type="submit" class="btn btn-danger pull-right" id="deleteOportunidad">Delete</button>
+	  </form>
+  	</div>
+  </div>
+  
+  <form class="form-horizontal" th:action="${''+{oportunidad.id}}" method="post" id="frmEditOportunidad" th:object="${oportunidad}">
+        <fieldset>
+          <legend>Edite su Oportunidad</legend>
+          <div class="error" th:text="${errorMsg}"></div>
+          <div class="error" th:text="${message}"></div>
+          <div class="form-group col-xs-12 col-sm-6 col-lg-6">
+              <label for="asunto" class="control-label col-xs-12 col-sm-2">Asunto: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="text" th:field="${oportunidad.asunto}" id="asunto"/>
+	          </div>
+	          
+	          <label for="clienteOport" class="control-label labelForm col-xs-12 col-sm-3 ">Nombre Cliente: </label>
+	          <div  class="col-xs-12 col-sm-9" style="margin-top:.5em">
+		        <input class="form-control fieldForm" type="text" th:field="${oportunidad.cliente.nombre}" id="project" required="required"/>
+		        <input class="form-control fieldForm" type="hidden" th:field="${oportunidad.cliente.id}" id="project-id" required="required"/>
+	          </div>
+	          
+	          <!--<div id="project-label">Selecciona un cliente: </div>
+ 		      <img id="project-icon" src="images/transparent_1x1.png" class="ui-state-default" alt=""/> 
+		      <input id="project"/>
+			  <input type="hidden" id="project-id"/>
+			   <p id="project-description"></p> -->
+	          
+	          <!-- <div class="col-xs-12 col-sm-3" style="margin-top:.5em">
+	              <button class="btn btn-primary" id="buscarClienteBtn">Buscar Cliente:</button>
+	            </div> -->
+	            
+	          <label for="ingreso" class="control-label labelForm col-xs-12 col-sm-2">Ingreso: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control fieldForm" type="number" th:field="${oportunidad.ingreso}" id="ingreso"/>
+	          </div>
+	          
+	          <label for="probabilidad" class="control-label fieldForm col-xs-12 col-sm-2">Probabilidad: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="number" th:field="${oportunidad.probabilidad}" id="probabilidad"/>
+	          </div>
+	          
+	          <label for="email" class="control-label col-xs-12 col-sm-2">Email: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="email" th:field="${oportunidad.email}" id="email" required="required"/>
+	          </div>
+	          
+	          <label for="telefono" class="control-label col-xs-12 col-sm-2">Telefono: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="text" th:field="${oportunidad.telefono}" id="telefono" required="required"/>
+	          </div>
+	          
+	          <label for="movil" class="control-label col-xs-12 col-sm-2">Movil: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="text" th:field="${oportunidad.movil}" id="movil"/>
+	          </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-lg-6">
+	          <label for="etapa-id" class="control-label col-xs-12 col-sm-4">Etapa: </label>
+	          <div class="col-xs-12 col-sm-8">
+		        <select class="form-control" th:field="*{etapaOportunidad}" id="etapa-id">
+		          <option th:each="etapa : ${etapas}"
+		            th:value="${etapa.id}" 
+                    th:text="${etapa.nombre}">Wireframe</option>
+		        </select>
+	          </div>
+	          
+	          <label for="accionSiguiente" class="control-label col-xs-12 col-sm-4">Accion Siguiente: </label>
+	          <div class="col-xs-12 col-sm-8">
+		        <input class="form-control" type="text" th:field="${oportunidad.accionSiguiente}" id="accionSiguiente"/>
+	          </div>
+	          
+	           <label for="fechaAccion" class="control-label col-xs-12 col-sm-4">Fecha Accion: </label>
+	          <div class="col-xs-12 col-sm-8">
+		        <input class="form-control" type="text" th:field="${oportunidad.fechaAccion}" id="fechaAccion" placeholder="dd/mm/yyyy"/>
+	          </div> 
+	          
+	          
+	          
+<!-- 	          <input type="text" name="basic_example_3" id="datetimepicker1" value="" class="hasDatepicker"/>
+ -->	          
+	          
+	          
+	          
+	           <label for="fechaCierre" class="control-label col-xs-12 col-sm-4">Fecha Cierre: </label>
+	          <div class="col-xs-12 col-sm-8">
+		        <input class="form-control" type="text" th:field="${oportunidad.fechaCierre}" id="fechaCierre" placeholder="dd/mm/yyyy"/>
+	          </div>  
+	          
+	          <label for="notas" class="control-label col-xs-12 col-sm-4">Notas: </label>
+	          <div class="col-xs-12 col-sm-8">
+		        <input class="form-control" type="text" th:field="${oportunidad.notas}" id="notas"/>
+	          </div>
+	          
+	      </div>
+	    </fieldset>
+	    <div class="form-group">
+	            <div class="col-xs-12 col-sm-offset-2 col-sm-10" style="margin-top:.5em">
+	              <button class="btn btn-primary" id="saveEditOportunidad">Salvar Cliente</button>
+	            </div>
+	    </div>      
+  </form>
+  
+  
+  <!-- <div id="buscar-cliente-form" >
+	  <fieldset>
+	    Nombre Cliente: <input type="text" id="searchCliente" />
+	  </fieldset>
+	</div> -->
+  
+  </div> <!-- termina Container  -->
+  
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    -->
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<title th:text="${'Clientes'}">Welcome cliente creation</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+		
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+	<link rel="stylesheet" href="css/general.css" />
+	<link rel="stylesheet" href="css/clientes.css" />
+	
+	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script   src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/clientes.js"></script>
+	
+ 	<script th:inline="javascript" >
+   /*<![CDATA[*/
+	  var clientes = /*[[${clientesArr}]]*/ '1';
+	
+   var loading = true;
+   var j = 0;
+   var numItems = clientes.length;
+   var perPage = 20;
+   var pageNumber = 1;
+   
+   
+   function loadFlickr(){
+	   var showFrom = perPage * (pageNumber - 1);
+       var showTo = showFrom + perPage;
+	   
+  		$.each(clientes, function(i,cliente){
+   			if(showFrom <= i && i <= showTo )
+   				{
+	  			var nombre = cliente.nombre; 
+	   			$("#clienteList").append(
+	   					/* "<div class='flickr_results'>"+j+" .-  "+nombre+"</div>") */
+	   			   "<div  class= 'ui-state-default lineStyle col-xs-12 col-sm-12 col-md-12 col-lg-12 '>"+
+	   	             "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 '>"+
+	   	             "  <a href= 'editCliente/"+cliente.id+"' >"+cliente.nombre+"</a>"+
+	   	             "</div>"+
+	   	             "<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 '>"+cliente.email+"</div>"+
+	   	             "<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 '>"+cliente.telefono+"</div>"+
+	   	             "<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>"+cliente.movil+"</div>"+
+	   	             "<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>"+cliente.RFC+"</div>"+
+	   	             "<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1'>"+cliente.esEmpresa+"</div>"+
+	   	          "</div>");
+	   			
+	   			j++;
+   				}
+   		});   
+  		
+  		pageNumber++;
+  		//ones we have loaded
+  		// kill the loading stuff
+  		loading = false;
+  		$(".loading").remove();
+   }
+	   
+   
+   $( function() {
+   		// load initial photos
+   		loadFlickr();
+   		
+   		//scroll event of the main div
+   		$("#clienteList").scroll(function(){
+   			
+   		//get the max and current scroll	
+   			var maxScroll = $(this)[0].scrollTop;
+   			var curScroll = $(this)[0].scrollHeight - $(this).height();
+   			
+   		// are we at the bottom?
+   			if((curScroll == maxScroll) && loading == false) {
+   				
+   				//when you start, set loading
+   				loading = true;
+   				
+   				//Add the loading box
+   				$("#clienteList").append("<div class='loading'>Loading...</div>")
+   				//scroll to the bottom of the div
+   				$(this)[0].scrollTop = $(this)[0].scrollHeight - $(this).height();
+   				//load more photos
+   				loadFlickr();
+   			}
+   		});
+	});		  
+	   /*]]>*/
+	  
+	   </script>
+   
+</head>
+
+	<body>	
+	  <div class="container">
+
+ 	  <div style="margin-bottom:2em" th:replace="fragments/header :: header"></div>
+	 
+	  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+	  <h2 style="margin-top:2em" th:text="${'Cliente'}">Cliente</h2>
+	  </div>
+	   <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" >
+			<button class="btn btn-primary center-block" style="margin-top: 4.2em " id="createCliente">Nuevo Cliente</button>	  
+	  </div>
+	  
+	  
+	 <nav class="navbar navbar-default col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: .5em" th:fragment="header">
+		  <div class="container-fluid">
+		  
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 "><a id="asunto"> <span class="lineaNavbarSpan">Nombre</span></a></li>
+		        <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Correo</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Telefono</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Movil</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">RFC</span></a></li>
+	            <li class="col-xs-1 col-sm-1 col-md-1 col-lg-1 lineaNavbar" ><a href="#" id="fechaAccion" onclick="orderByFechaAccion(); return false"><span class="lineaNavbarSpan">Es Empresa?</span></a></li>
+		      </ul>
+		      
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+	  </nav>
+	  
+	 <!-- <div id="clienteList1" th:each="cliente : ${clientes}" th:object="${cliente}">
+         
+          <div  class= "ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12">
+             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 tableLines">
+               <a th:href= "${'editCliente/' + {cliente.id}}" th:text="${cliente.nombre}" ></a>
+             </div>
+             <div th:text= "${cliente.email}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+             <div th:text= "${cliente.telefono}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+             <div th:text= "${cliente.movil}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+             <div th:text= "${cliente.RFC}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+             <div th:text= "${cliente.esEmpresa}" class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+             
+         </div>
+      </div>-->
+      
+       <div id="clienteList">
+       
+       </div>
+	 
+	 
+	  <div th:if="${ #lists.isEmpty(cliente) }">
+		  No hay cliente para desplegar
+	  </div>
+	  
+	 
+	  
+	  <div id="create-cliente-dialog">
+	    <form id="createClienteForm" action="" th:object="${cliente}" method="post">
+	      <fieldset>
+	        Nombre Cliente: <input type="text" th:field="${cliente.nombre}" />
+	      </fieldset>
+	    </form>
+	  </div>
+	  
+	  
+	  
+	
+	</div>
+	<!--   jQuery (necessary for Bootstrap's JavaScript plugins)
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+     -->
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>	
+
+	
+	</body>
+</html>

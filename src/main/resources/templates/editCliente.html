@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title>Edit Course</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+	<script   src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"   integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="   crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/js/editCliente.js"></script>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+	
+	<style type="text/css">
+  	  .error
+    {
+      color: red; 
+    }
+  </style>
+  
+	<script th:inline="javascript">
+ 	/*<![CDATA[*/
+	  var clienteId = /*[[${cliente.id}]]*/ '1';  
+	  var clientes = /*[[${clientesArr}]]*/ '1';
+
+	  
+	  $(function () {
+		  var search = []
+		     
+			for(var i = 0; i<clientes.length ; i++)
+			{  
+				
+				search.push(
+			      {
+			    	value: clientes[i].id,
+			        label: clientes[i].nombre + " - " + clientes[i].email,
+			        nombre: clientes[i].nombre,
+			        email: clientes[i].email,
+			        telefono: clientes[i].telefono,
+			        movil: clientes[i].movil
+			      }
+	          );
+			}
+ 
+	  
+			 $( "#empresa" ).autocomplete({
+			   minLength: 0,
+			   source: search,
+			   focus: function( event, ui ) {
+			     $( "#empresa" ).val( ui.item.label );
+			     return false;
+			   },
+			   select: function( event, ui ) {
+			     $( "#empresa" ).val( ui.item.nombre );
+			     $( "#empresa-id" ).val( ui.item.value );
+			     $( "#email" ).val( ui.item.email );
+			     $( "#telefono" ).val( ui.item.telefono );
+			     $( "#movil" ).val( ui.item.movil );
+			     /*          $( "#project-description" ).html( ui.item.desc );
+			      $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+			*/    
+			     return false;
+			   }
+			 })
+			 .autocomplete( "instance" )._renderItem = function( ul, item ) {
+			   return $( "<li>" )
+			     .append( "<div>" + item.label+ "</div>" )
+			     .appendTo( ul );
+			 };  
+			
+			});		  
+	  /*]]>*/ 
+	</script>
+</head>
+<body>  
+  <div class="container">
+  
+  <div class="row">
+    <div class="col-xs-12">
+  		<div th:replace="fragments/header :: header"></div>    
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-xs-12">
+	    <h2 style="margin-top:2em" th:text="${'Editar Cliente:  ' + {cliente.nombre}}">Edit cliente</h2>
+	  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <form id="frmDeleteCliente" th:action="${{cliente.id} + '/deleteCliente'}" method="post">
+	    <button type="submit" class="btn btn-danger pull-right" id="deleteCliente">Delete</button>
+	  </form>
+  	</div>
+  </div>
+  
+  <form class="form-horizontal" th:action="${''+{cliente.id}}" method="post" id="frmEditCliente" th:object="${cliente}">
+        <fieldset>
+          <legend>Edite los Datos del Cliente</legend>
+          <div class="error" th:text="${errorMsg}"></div>
+          <div class="error" th:text="${message}"></div>
+          <div class="form-group">
+              <label for="nombre" class="control-label col-xs-12 col-sm-2">Nombre: </label>
+	          <div class="col-xs-12 col-sm-10">
+		        <input class="form-control" type="text" th:field="${cliente.nombre}" id="nombre"/>
+	          </div>
+	          
+	          <label for="emailAdress" class="control-label col-xs-12 col-sm-2"  style="margin-top:.5em">Email Address: </label>
+	          <div class="col-xs-12 col-sm-10"  style="margin-top:.5em">
+		        <input class="form-control" type="email" th:field="${cliente.email}" id="emailAdress"/>
+	          </div>
+	          
+	          <label for="telefono" class="control-label col-xs-12 col-sm-2" style="margin-top:.5em">Telefono: </label>
+	          <div class="col-xs-12 col-sm-10" style="margin-top:.5em">
+		        <input class="form-control" type="text" th:field="${cliente.telefono}" id="telefono" />
+	          </div>
+	          
+	          <label for="movil" class="control-label col-xs-12 col-sm-2"  style="margin-top:.5em">Movil: </label>
+	          <div class="col-xs-12 col-sm-10" style="margin-top:.5em">
+		        <input class="form-control" type="text" th:field="${cliente.movil}" id="movil"/>
+	          </div>
+	          
+	          <label for="RFC" class="control-label col-xs-12 col-sm-2" style="margin-top:.5em">RFC: </label>
+	          <div class="col-xs-12 col-sm-10" style="margin-top:.5em">
+		        <input class="form-control" type="text" th:field="${cliente.RFC}" id="RFC"/>
+	          </div>
+	          
+	          <label for="direccionEntrega" class="control-label col-xs-12 col-sm-2" style="margin-top:.5em">Direccion de Entrega: </label>
+	          <div class="col-xs-12 col-sm-10" style="margin-top:.5em">
+		        <input class="form-control" type="text" th:field="${cliente.direccionEntrega}" id="direccionEntrega"/>
+	          </div>
+	          
+	          <label for="esEmpresa" class="control-label col-xs-12 col-sm-2" style="margin-top:.5em">Es Empresa?: </label>
+	          <div class="col-xs-12 col-sm-10" style="margin-top:.5em">
+		        <input class="form-control" type="checkbox" th:field="${cliente.esEmpresa}" id="esEmpresa"/>
+	          </div>
+	          
+	         <!--  <div th:unless="${cliente.esEmpresa}"> -->
+		          <label id="empresaLabel" for="empresa" class="control-label col-xs-12 col-sm-2" style="margin-top:.5em">Empresa: </label>
+		          <div class="col-xs-12 col-sm-10" style="margin-top:.5em" id="empresaDiv">
+			        <input class="form-control fieldForm" type="text" th:field="${cliente.empresa.nombre}" id="empresa" required="required"/>
+			        <input class="form-control fieldForm" type="hidden" th:field="${cliente.empresa.id}" id="empresa-id" required="required"/>
+		          </div>
+	          <!-- </div> -->
+          </div>
+        </fieldset>
+        <div class="form-group">
+	            <div class="col-xs-12 col-sm-offset-2 col-sm-10" style="margin-top:.5em">
+	              <button class="btn btn-primary" id="saveEditCliente">Salvar Edicion</button>
+	            </div>
+	    </div>
+  </form>
+  
+  </div> <!-- termina Container  -->
+  
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    -->
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>
