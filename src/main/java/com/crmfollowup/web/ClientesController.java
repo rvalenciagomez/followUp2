@@ -19,6 +19,7 @@ public class ClientesController
 {
   private UserRepository userRepo;
 
+  
 //  @RequestMapping(value="prueba", method=RequestMethod.GET)
 //  public String prueba(ModelMap model, @AuthenticationPrincipal User user)
 //  {       
