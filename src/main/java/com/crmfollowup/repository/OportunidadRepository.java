@@ -21,4 +21,6 @@ public interface OportunidadRepository extends JpaRepository<Oportunidad, Long>
   public List<Oportunidad> findOportunidadByEtapaOportunidadAndUser(EtapaOportunidad etapa , User user); 
   
   public List<Oportunidad> findByUserOrderByFechaAccionAsc(User user);
+  
+  
 }

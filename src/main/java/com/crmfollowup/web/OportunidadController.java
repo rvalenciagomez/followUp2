@@ -1,6 +1,10 @@
 package com.crmfollowup.web;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -75,8 +79,20 @@ public class OportunidadController
     List<Oportunidad> oportunidades = oportRepo.findByUserOrderByFechaAccionAsc(user);
     
     List<EtapaOportunidad> etapasList = etapaRepo.findByOrderByOrdenAsc();
+    Calendar fechaActual = Calendar.getInstance();
+    List<Oportunidad> oportsFiltradas = new ArrayList<Oportunidad>();
     
-    model.put("oportunidades", oportunidades);
+    for(Oportunidad oport : oportunidades)
+    {
+    //convert date to datetime
+      LocalDate localDate = oport.getFechaAccion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+      int oportMonth = localDate.getMonthValue() -1;
+      
+      if(oportMonth == fechaActual.get(Calendar.MONTH))
+        oportsFiltradas.add(oport); 
+    }
+    
+    model.put("oportunidades", oportsFiltradas);
     model.put("oportunidad", oportunidad);
     model.put("etapas", etapasList);
     return "oportunidades";
@@ -105,6 +121,8 @@ public class OportunidadController
     oportRepo.save(oportunidad);
     return null;
   }
+  
+  
   
   @RequestMapping(value="editOportunidad/{oportId}", method=RequestMethod.GET)
   public String editOportunidades(ModelMap model, @PathVariable("oportId") Long oportId , @AuthenticationPrincipal User user)
