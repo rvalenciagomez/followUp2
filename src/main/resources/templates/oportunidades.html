@@ -38,41 +38,44 @@
 	  
 	  <div style="margin-bottom:0em" th:replace="fragments/headerOportunidades :: header"></div>
 	  
+	  <!-- SECCION FILTROS  -->
 	  <div class="listOports col-xs-12 col-sm-12 col-md-12 col-lg-12" >
   		<h4 style=" margin-top:-1em; color: #333; " th:text ="Filtros">Filtros</h4>
   		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="color: #333;"	>
-  		<a th:href= "${'oportunidades'}" >Mes Actual</a>
+  			<a href="#" id="mesActualRef">Mes Actual</a>
   		</div>
 	  </div>
 	  
-	  <div th:each= "etapa : ${etapas}" th:object ="${etapa}">
-                <h3 style=" margin-top:0em " th:text ="${etapa.nombre}"></h3>
-                <div th:id= "${'sortable-'+{etapa.id}}" class="connectedSortable listOports col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                     
-                      <div th:id= "${'oport-'+{oportunidad.id}}" th:each="oportunidad : ${oportunidades}" th:object="${oportunidad}">
-                      
-                       <div th:switch="${etapa.id}" th:case="${oportunidad.etapaOportunidad.id}" >
-                       <div  class= "ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        
-                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                         <a th:href= "${'editOportunidad/' + {oportunidad.id}}" th:text="${oportunidad.asunto}" ></a>
-                         </div>
-                         <div th:text= "${oportunidad.cliente.nombre}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-                         <div th:text= "*{ingreso}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-                         <div th:text= "*{etapaOportunidad.nombre}"   class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ></div>
-                         <div th:text= "*{accionSiguiente}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-                         <div th:text= "*{fechaAccion}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2 date"></div>
-                       </div>
-                       </div>
-                      </div>
-                     
-                     
-                      <div th:if= "${ #lists.isEmpty(oportunidad) }" >
-                             No hay Oportunidades para desplegar
-                       </div>
-                </div>
-         </div>
-	  
+	  <!-- SECCION DE OPORTUNIDADES  -->
+	  <div id="seccOports">
+		  <div th:each= "etapa : ${etapas}" th:object ="${etapa}">
+	                <h3 style=" margin-top:0em " th:text ="${etapa.nombre}"></h3>
+	                <div th:id= "${'sortable-'+{etapa.id}}" class="connectedSortable listOports col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                     
+	                      <div th:id= "${'oport-'+{oportunidad.id}}" th:each="oportunidad : ${oportunidades}" th:object="${oportunidad}">
+	                      
+	                       <div th:switch="${etapa.id}" th:case="${oportunidad.etapaOportunidad.id}" >
+	                       <div  class= "ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                        
+	                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+	                         <a th:href= "${'editOportunidad/' + {oportunidad.id}}" th:text="${oportunidad.asunto}" ></a>
+	                         </div>
+	                         <div th:text= "${oportunidad.cliente.nombre}" class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+	                         <div th:text= "*{ingreso}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+	                         <div th:text= "*{etapaOportunidad.nombre}"   class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ></div>
+	                         <div th:text= "*{accionSiguiente}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+	                         <div th:text= "*{fechaAccion}"  class ="col-xs-2 col-sm-2 col-md-2 col-lg-2 date"></div>
+	                       </div>
+	                       </div>
+	                      </div>
+	                     
+	                     
+	                      <div th:if= "${ #lists.isEmpty(oportunidad) }" >
+	                             No hay Oportunidades para desplegar
+	                       </div>
+	                </div>
+	         </div>
+	     </div>
 	 
 	  
 		  

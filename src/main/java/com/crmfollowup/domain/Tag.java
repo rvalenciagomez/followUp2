@@ -1,5 +1,10 @@
 package com.crmfollowup.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Tag 
 {
   public int id;
@@ -13,6 +18,8 @@ public class Tag
     this.tagName = tagName;
   }
 
+  @Id
+  @GeneratedValue
   public int getId() {
     return id;
   }

@@ -18,11 +18,12 @@ import com.crmfollowup.repository.UserRepository;
 public class ClientesController 
 {
   private UserRepository userRepo;
-
+  
   
 //  @RequestMapping(value="prueba", method=RequestMethod.GET)
 //  public String prueba(ModelMap model, @AuthenticationPrincipal User user)
-//  {       
+//  {     
+  
 //    User clienteNuevo = new User();
 //    
 //    List<User> clientes = userRepo.findAll();
@@ -55,7 +56,7 @@ public class ClientesController
   @RequestMapping(value="clientes", method=RequestMethod.GET)
   public String courses(String searchTerm, ModelMap model, @AuthenticationPrincipal User user)
   {
-    User clienteNuevo = new User();
+    User clienteNuevo = new User(); 
     
     List<User> clientes = userRepo.findByEsCliente();
     

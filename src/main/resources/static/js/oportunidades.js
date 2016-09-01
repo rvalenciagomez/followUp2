@@ -3,11 +3,42 @@
  		 
    	    });
 
- 	
-
 	  $(function () {
 		  
-		
+		  $("#mesActualRef").on('click',function(){
+	        	event.preventDefault();
+	        	
+	        	/*$.ajax({
+	         		  url:"etapaoportunidades/mesactual",
+	         		  method:"post",
+	  			      type:"json",
+//	         		  data:{"oportId": oportIdVal},
+	         	      success: function (etapasList) {
+//	         	    	 var oportunidades = objectsList.Array[0];
+//	         	    	 var etapasList = objectsList.Array[1];
+	         	    	  
+	         	    	 $.ajax({
+	   	         		  url:"oportunidades/mesactual",
+	   	         		  method:"post",
+	   	  			      type:"json",	   	         		 
+	   	         	      success: function (oportunidades) {
+	   	         	    	 replaceDivOportunidades (oportunidades, etapasList);
+//	   	         	    	  alert(oportunidades);
+	   	         	      },
+	   	         	      error: function (oportunidades) {
+	   	         	    	  console.log("there was an error");
+	   	         	      }
+	   	         	   }); 
+	         	    	  
+	         	      },
+	         	      error: function (etapasList) {
+	         	    	  console.log("there was an error");
+	         	      }
+	         	   });
+	        	
+	        	*/
+	        	
+	        });
 		 
 		  
 //	 	  de Pagina listado de OPORTUNIDADES, poner el formato correcto
@@ -74,7 +105,95 @@
 		  
 });  // -----------------finaliza funicion GENEARAL ---------------------------------
 	  
+	  function findOport(oportunidad, callback) {
+		  if(oportunidad ==0) {
+			  var oportunidadId = oportunidad.id;
+		  } else {
+			  var oportunidadId = oportunidad;
+		  }
+		  
+		  
+		  $.ajax({
+			      async: false,
+        		  url:"findOportunidad/"+oportunidadId,
+        		  method:"post",
+ 			      type:"json",	
+ 			      data:{"oportId": oportunidadId},
+        	      success: callback
+//        	      error: function (oport) {
+//        	    	  console.log("there was an error");
+//        	      }
+        	   }); 
+	  }
 	  
+	  function findOport_success(total_percentage) {
+		    alert(oport);
+		}
+	  
+	  function replaceDivOportunidades (oportunidades, etapasList) {
+		  
+//		  findOport (oportunidades[1], function (oport) {
+//			  var oportBuscada = oport;
+//			  alert(oportBuscada.asunto);
+//	      });
+		  
+		  $("#seccOports").replaceWith(
+      			"<div id=\"seccOports\"></div>"
+		  );
+		  
+		  for(var i=0; i < etapasList.length; i++) 
+		  {
+			  if(etapasList[i] != null)
+		      {
+				  $("#seccOports").append(
+						  "<h3 style=\" margin-top:0em \">"+etapasList[i].nombre+"</h3>"+
+						  "       <div id= \"sortable-"+etapasList[i].id+"\" class=\"connectedSortable listOports col-xs-12 col-sm-12 col-md-12 col-lg-12\">"+
+						  
+						  "</div>"
+				  );				  
+				  for(var j=0; j < oportunidades.length; j++)
+					  {
+					  if(oportunidades[j] != null)
+				      {
+						  findOport (oportunidades[j], function (oportunidad) {
+							  if(etapasList[i].id == oportunidad.etapaOportunidad.id) 
+						      {
+								  $("#seccOports").append(
+//							    "     <div th:id= \"${'oport-'+{oportunidad.id}}\" th:each=\"oportunidad : ${oportunidades}\" th:object=\"${oportunidad}\">"+
+//									  "   <div th:switch=\"${etapa.id}\" th:case=\"${oportunidad.etapaOportunidad.id}\" >"+
+									  "   <div  class= \"ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12\">"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+
+									  "     <a href= \"editOportunidad/" + oportunidad.id+"\">"+oportunidad.asunto+"</a>"+
+									  "     </div>"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.cliente.nombre+"</div>"+
+									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.ingreso+"</div>"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\" >"+oportunidad.etapaOportunidad.nombre+"</div>"+
+									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.accionSiguiente+"</div>"+
+									  "     <div 	class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2 date\">"+oportunidad.fechaAccion+"</div>"+
+									  "   </div>"
+								  );
+						      }
+					      });
+				      }
+					  }
+				  
+		      }
+		  }
+//      			"  <div th:each= \"etapa : ${etapas}\" th:object =\"${etapa}\">"+
+      				
+      					
+      			
+      			
+      			
+      		    
+      		    
+      		    /*"                  <div th:if= \"${ #lists.isEmpty(oportunidad) }\" >"+
+      		    "                         No hay Oportunidades para desplegar"+
+      		    "                   </div>"+
+      		    "            </div>"+
+      		    " </div>"
+      		);*/
+	  }
 	  
 	  function clickedClassHandler(name,callback) {
 

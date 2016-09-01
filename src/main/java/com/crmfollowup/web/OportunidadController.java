@@ -31,6 +31,7 @@ import com.crmfollowup.repository.UserRepository;
 import com.crmfollowup.service.CSVReaderService;
 import com.crmfollowup.service.SmtpMailSender;
 
+
 @Controller
 public class OportunidadController 
 {
@@ -38,6 +39,7 @@ public class OportunidadController
   private UserRepository userRepo;
   private EtapaRepository etapaRepo;
   
+ 
   @Autowired
   TaskScheduler taskScheduler;
 
@@ -110,6 +112,37 @@ public class OportunidadController
     return "redirect:/editOportunidad/" + savedCourse.getId();
   }
   
+  @RequestMapping(value="oportunidades/mesactual", method=RequestMethod.POST)
+  public  @ResponseBody List<Oportunidad> oportunidadesMesActual ( ModelMap model, @AuthenticationPrincipal User user)
+  {
+	  List<Oportunidad> oportunidades = oportRepo.findByUserOrderByFechaAccionAsc(user);
+	    
+    
+
+//	  List<Object> objectsList = new ArrayList List<Object>();
+//	  objectsList.add(oportunidades);
+//	  objectsList.add(etapasList);
+	  	  
+    return oportunidades;
+  }
+  
+  @RequestMapping(value="etapaoportunidades/mesactual", method=RequestMethod.POST)
+  public  @ResponseBody List<EtapaOportunidad> etapaOportunidadesMesActual ( ModelMap model, @AuthenticationPrincipal User user)
+  {
+	  List<EtapaOportunidad> etapasList = etapaRepo.findByOrderByOrdenAsc();
+	 
+    return etapasList;
+  }
+  
+  @RequestMapping(value="findOportunidad/{oportId}", method=RequestMethod.POST)
+  public  @ResponseBody Oportunidad findOportunidadPost (@PathVariable("oportId") Long oportId, ModelMap model, @AuthenticationPrincipal User user)
+  {
+	  Oportunidad oportunidad = oportRepo.findOne(oportId);
+	 
+    return oportunidad;
+  }
+  
+  
   @RequestMapping(value="oportunidades/{oportId}", method=RequestMethod.POST)
   public  @ResponseBody Oportunidad oportunidadesPost (@PathVariable("oportId") Long oportId, 
       @RequestParam Long etapaId, ModelMap model)
@@ -119,7 +152,7 @@ public class OportunidadController
     
     oportunidad.setEtapaOportunidad(etapaOportunidad);
     oportRepo.save(oportunidad);
-    return null;
+    return oportunidad;
   }
   
   
