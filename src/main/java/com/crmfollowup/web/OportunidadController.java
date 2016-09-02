@@ -29,6 +29,7 @@ import com.crmfollowup.repository.EtapaRepository;
 import com.crmfollowup.repository.OportunidadRepository;
 import com.crmfollowup.repository.UserRepository;
 import com.crmfollowup.service.CSVReaderService;
+import com.crmfollowup.service.FiltersForOportunidades;
 import com.crmfollowup.service.SmtpMailSender;
 
 
@@ -48,6 +49,9 @@ public class OportunidadController
   
   @Autowired
   private CSVReaderService csvReader;
+  
+  @Autowired
+  private FiltersForOportunidades filtersOports;
  
 
   @RequestMapping("/")
@@ -69,6 +73,7 @@ public class OportunidadController
   {
     return "index";
   }
+  
   @RequestMapping(value="oportunidades", method=RequestMethod.GET)
   public String oportunidades(ModelMap model, @AuthenticationPrincipal User user)
   {
@@ -81,20 +86,28 @@ public class OportunidadController
     List<Oportunidad> oportunidades = oportRepo.findByUserOrderByFechaAccionAsc(user);
     
     List<EtapaOportunidad> etapasList = etapaRepo.findByOrderByOrdenAsc();
-    Calendar fechaActual = Calendar.getInstance();
-    List<Oportunidad> oportsFiltradas = new ArrayList<Oportunidad>();
     
-    for(Oportunidad oport : oportunidades)
-    {
-    //convert date to datetime
-      LocalDate localDate = oport.getFechaAccion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-      int oportMonth = localDate.getMonthValue() -1;
-      
-      if(oportMonth == fechaActual.get(Calendar.MONTH))
-        oportsFiltradas.add(oport); 
-    }
     
-    model.put("oportunidades", oportsFiltradas);
+    model.put("oportunidades", oportunidades);
+    model.put("oportunidad", oportunidad);
+    model.put("etapas", etapasList);
+    return "oportunidades";
+    
+  }
+  
+  @RequestMapping(value="oportunidades/{filtro}", method=RequestMethod.GET)
+  public String oportunidadesConFiltro(ModelMap model, @AuthenticationPrincipal User user, @PathVariable ("filtro") String filtro)
+  {
+    Oportunidad oportunidad = new Oportunidad();
+  
+    EtapaOportunidad etapa = etapaRepo.findOne((long) 1); 
+    List<Oportunidad> oportunidades = oportRepo.findByUserOrderByFechaAccionAsc(user);
+    
+    List<EtapaOportunidad> etapasList = etapaRepo.findByOrderByOrdenAsc();
+    
+    oportunidades = filtersOports.recepcionFiltro(filtro, oportunidades);
+    
+    model.put("oportunidades", oportunidades);
     model.put("oportunidad", oportunidad);
     model.put("etapas", etapasList);
     return "oportunidades";

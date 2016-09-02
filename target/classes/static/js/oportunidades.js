@@ -5,10 +5,10 @@
 
 	  $(function () {
 		  
-		  $("#mesActualRef").on('click',function(){
+		  /*$("#mesActualRef").on('click',function(){
 	        	event.preventDefault();
 	        	
-	        	/*$.ajax({
+	        	$.ajax({
 	         		  url:"etapaoportunidades/mesactual",
 	         		  method:"post",
 	  			      type:"json",
@@ -36,9 +36,9 @@
 	         	      }
 	         	   });
 	        	
-	        	*/
 	        	
-	        });
+	        	
+	        });*/
 		 
 		  
 //	 	  de Pagina listado de OPORTUNIDADES, poner el formato correcto
@@ -126,75 +126,8 @@
         	   }); 
 	  }
 	  
-	  function findOport_success(total_percentage) {
-		    alert(oport);
-		}
-	  
-	  function replaceDivOportunidades (oportunidades, etapasList) {
-		  
-//		  findOport (oportunidades[1], function (oport) {
-//			  var oportBuscada = oport;
-//			  alert(oportBuscada.asunto);
-//	      });
-		  
-		  $("#seccOports").replaceWith(
-      			"<div id=\"seccOports\"></div>"
-		  );
-		  
-		  for(var i=0; i < etapasList.length; i++) 
-		  {
-			  if(etapasList[i] != null)
-		      {
-				  $("#seccOports").append(
-						  "<h3 style=\" margin-top:0em \">"+etapasList[i].nombre+"</h3>"+
-						  "       <div id= \"sortable-"+etapasList[i].id+"\" class=\"connectedSortable listOports col-xs-12 col-sm-12 col-md-12 col-lg-12\">"+
-						  
-						  "</div>"
-				  );				  
-				  for(var j=0; j < oportunidades.length; j++)
-					  {
-					  if(oportunidades[j] != null)
-				      {
-						  findOport (oportunidades[j], function (oportunidad) {
-							  if(etapasList[i].id == oportunidad.etapaOportunidad.id) 
-						      {
-								  $("#seccOports").append(
-//							    "     <div th:id= \"${'oport-'+{oportunidad.id}}\" th:each=\"oportunidad : ${oportunidades}\" th:object=\"${oportunidad}\">"+
-//									  "   <div th:switch=\"${etapa.id}\" th:case=\"${oportunidad.etapaOportunidad.id}\" >"+
-									  "   <div  class= \"ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12\">"+
-									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+
-									  "     <a href= \"editOportunidad/" + oportunidad.id+"\">"+oportunidad.asunto+"</a>"+
-									  "     </div>"+
-									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.cliente.nombre+"</div>"+
-									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.ingreso+"</div>"+
-									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\" >"+oportunidad.etapaOportunidad.nombre+"</div>"+
-									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.accionSiguiente+"</div>"+
-									  "     <div 	class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2 date\">"+oportunidad.fechaAccion+"</div>"+
-									  "   </div>"
-								  );
-						      }
-					      });
-				      }
-					  }
-				  
-		      }
-		  }
-//      			"  <div th:each= \"etapa : ${etapas}\" th:object =\"${etapa}\">"+
-      				
-      					
-      			
-      			
-      			
-      		    
-      		    
-      		    /*"                  <div th:if= \"${ #lists.isEmpty(oportunidad) }\" >"+
-      		    "                         No hay Oportunidades para desplegar"+
-      		    "                   </div>"+
-      		    "            </div>"+
-      		    " </div>"
-      		);*/
-	  }
-	  
+
+
 	  function clickedClassHandler(name,callback) {
 
 		    // apply click handler to all elements with matching className
@@ -239,7 +172,7 @@
 	  function saveOportunity(oportIdVal, etapaIdVal)
 	  {
 		  $.ajax({
-       		  url:"oportunidades/"+oportIdVal,
+       		  url:"/oportunidades/"+oportIdVal,
        		 method:"post",
 			 type:"json",
        		  data:{"oportId": oportIdVal, "etapaId": etapaIdVal},
@@ -252,5 +185,75 @@
        	   });
 	  }
 	  
+	  
+	  
+	  //  - - - FUNICION PARA filtrar con Javascript , pero ya NO ESTA EN USO
+	  
+  function replaceDivOportunidades (oportunidades, etapasList) {
+		  
+//		  findOport (oportunidades[1], function (oport) {
+//			  var oportBuscada = oport;
+//			  alert(oportBuscada.asunto);
+//	      });
+		  
+		  $("#seccOports").replaceWith(
+      			"<div id=\"seccOports\"></div>"
+		  );
+		  
+		  for(var i=0; i < etapasList.length; i++) 
+		  {
+			  if(etapasList[i] != null)
+		      {
+				  $("#seccOports").append(
+						  "<h3 style=\" margin-top:0em \">"+etapasList[i].nombre+"</h3>"+
+						  "       <div id= \"sortable-"+etapasList[i].id+"\" class=\"connectedSortable listOports col-xs-12 col-sm-12 col-md-12 col-lg-12\">"
+
+				  );				  
+				  for(var j=0; j < oportunidades.length; j++)
+					  {
+					  if(oportunidades[j] != null)
+				      {
+						  findOport (oportunidades[j], function (oportunidad) {
+							  if(etapasList[i].id == oportunidad.etapaOportunidad.id) 
+						      {
+								  $("#seccOports").append(
+//							    "     <div th:id= \"${'oport-'+{oportunidad.id}}\" th:each=\"oportunidad : ${oportunidades}\" th:object=\"${oportunidad}\">"+
+//									  "   <div th:switch=\"${etapa.id}\" th:case=\"${oportunidad.etapaOportunidad.id}\" >"+
+									  "   <div  class= \"ui-state-default oportLine col-xs-12 col-sm-12 col-md-12 col-lg-12\">"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+
+									  "     <a href= \"editOportunidad/" + oportunidad.id+"\">"+oportunidad.asunto+"</a>"+
+									  "     </div>"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.cliente.nombre+"</div>"+
+									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.ingreso+"</div>"+
+									  "     <div class=\"col-xs-2 col-sm-2 col-md-2 col-lg-2\" >"+oportunidad.etapaOportunidad.nombre+"</div>"+
+									  "     <div class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2\">"+oportunidad.accionSiguiente+"</div>"+
+									  "     <div 	class =\"col-xs-2 col-sm-2 col-md-2 col-lg-2 date\">"+oportunidad.fechaAccion+"</div>"+
+									  "   </div>"
+								  );
+						      }
+					      });
+				      }
+					  }
+				  $("#seccOports").append(
+						  "</div>"
+				  );	
+				  
+		      }
+		  }
+//      			"  <div th:each= \"etapa : ${etapas}\" th:object =\"${etapa}\">"+
+      				
+      					
+      			
+      			
+      			
+      		    
+      		    
+      		    /*"                  <div th:if= \"${ #lists.isEmpty(oportunidad) }\" >"+
+      		    "                         No hay Oportunidades para desplegar"+
+      		    "                   </div>"+
+      		    "            </div>"+
+      		    " </div>"
+      		);*/
+	  }
 	 
 	

@@ -24,6 +24,7 @@ public class ClientesController
 //  public String prueba(ModelMap model, @AuthenticationPrincipal User user)
 //  {     
   
+  
 //    User clienteNuevo = new User();
 //    
 //    List<User> clientes = userRepo.findAll();

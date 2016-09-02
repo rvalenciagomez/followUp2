@@ -3,11 +3,9 @@
 <head>
 	<title th:text="${'Oportunidades'}">Welcome courses creation</title>
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
-	<link rel="stylesheet" href="css/oportunidades.css" />
-	<link rel="stylesheet" href="css/general.css" />
+	<link rel="stylesheet" href="/css/oportunidades.css" />
+	<link rel="stylesheet" href="/css/general.css" />
 	
  	 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"/>  -->
 
@@ -20,6 +18,8 @@
 	
 	<script type="text/javascript" src="/js/oportunidades.js"></script>
  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
  	 <!-- <script type="text/javascript" src="js/jquery-sortable.js"></script>   -->
  	
 	  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  
@@ -40,10 +40,20 @@
 	  
 	  <!-- SECCION FILTROS  -->
 	  <div class="listOports col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-  		<h4 style=" margin-top:-1em; color: #333; " th:text ="Filtros">Filtros</h4>
-  		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="color: #333;"	>
-  			<a href="#" id="mesActualRef">Mes Actual</a>
+  		<h3 style=" margin-top:-1em; color: #333; " th:text ="Filtros">Filtros</h3>
+  		<h4 style=" margin-top:-.5em; color: #333;  " 	>Por Fecha Siguiente Accion:</h4>
+  		<div class="col-xs-2 col-sm-2 col-md-6" style="color: #333;">
+  			
+  			<a href="/oportunidades/MesActual" >Mes Actual</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+  			<a href="/oportunidades/SemanaActual" >Semana Actual</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+  			<a href="/oportunidades/SiguienteSemana" >Siguiente Semana</a>
   		</div>
+  		<!-- <div class="col-xs-2 col-sm-2 col-md-1.5" style="color: #333; padding:0em;">
+  			
+  		</div>
+  		<div class="col-xs-2 col-sm-2 col-md-1.5" style="color: #333;">
+  			
+  		</div> -->
 	  </div>
 	  
 	  <!-- SECCION DE OPORTUNIDADES  -->
