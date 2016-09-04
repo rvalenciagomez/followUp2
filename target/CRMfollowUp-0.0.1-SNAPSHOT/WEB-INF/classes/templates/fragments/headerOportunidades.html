@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+  <head>
+  </head>
+  <body>
+    <nav class="navbar navbar-default" th:fragment="header">
+		  <div class="container-fluid">
+		  
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		        <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 "><a id="asunto"> <span class="lineaNavbarSpan">Asunto</span></a></li>
+		        <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Nombre</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Ingreso</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Etapa Oportunidad</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar"><a href="#" id="fechaAccion" onclick=" return false"><span class="lineaNavbarSpan">Accion Siguiente</span></a></li>
+	            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 lineaNavbar" ><a href="#" id="fechaAccion" onclick="orderByFechaAccion(); return false"><span class="lineaNavbarSpan">Fecha Accion</span></a></li>
+		      </ul>
+		      
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+	  </nav>
+  </body>
+</html>
