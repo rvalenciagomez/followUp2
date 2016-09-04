@@ -1,6 +1,6 @@
 package com.crmfollowup.web;
 
-import org.junit.Test;
+//import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -63,11 +63,11 @@ public class LoginController
   }
   
 
-  @Test
-  public void encoding_test()
-  {
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    String pwd = "tonton";
-    System.out.println(encoder.encode(pwd));
-  }
+//  @Test
+//  public void encoding_test()
+//  {
+//    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    String pwd = "tonton";
+//    System.out.println(encoder.encode(pwd));
+//  }
 }

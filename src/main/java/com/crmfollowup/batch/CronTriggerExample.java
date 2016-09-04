@@ -1,4 +1,4 @@
-package com.crmfollowup.batch;
+/*package com.crmfollowup.batch;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
@@ -37,3 +37,4 @@ public class CronTriggerExample
     
     }
 }
+*/
